@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Endereco implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -27,6 +29,8 @@ public class Endereco implements Serializable{
 	private Cliente cliente;
 	
 	//Só endereco conhece cidade e nao o inverso (relacão unidirecional) > ai nao precisa fazer nada na Classe Cidade
+	//Assossiação bidirecional > @JsonManagedReference puxa enderecos (ai em enderecos usa back reference pra nao puxar e nao dar ciclico)
+	@JsonBackReference
 	@ManyToOne
 	@JoinColumn(name="cidade_id")//cidade_id = mais um campo de relacionamento dentro do DB
 	private Cidade cidade;

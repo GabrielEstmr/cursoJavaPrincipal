@@ -26,6 +26,7 @@ public class Categoria implements Serializable {
 	//Relacionamentos de tabelas
 	//Como já fez em Produtos > aqui é só referenciar
 	@JsonManagedReference //>> evitar referencia ciclica (LADO QUE VC QUER QUE VENHA OBJETOS ASSOSSIADOS)
+	//Assossiação ciclica: QUANDO TEM RELAÇÃO BIDIRECIONAL
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
