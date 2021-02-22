@@ -8,38 +8,42 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
-//Serializable - para objetos da classe possa ser convertido em sequencia de bites > para trafegar em rede, ser salvos etc
 @Entity
-public class Categoria implements Serializable {
-	//Quando classe implementa o Serializable precisa de numero de versão padrão
+public class Produto implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	private Double preco;
 	
-	//Relacionamentos de tabelas
-	//Como já fez em Produtos > aqui é só referenciar
-	@ManyToMany(mappedBy="categorias")
-	private List<Produto> produtos = new ArrayList<>();
+	//Relacionamentos de tabelas > definição tabela de-para e chaves extrangeiras
+	@ManyToMany
+	@JoinTable(
+			name="PRODUTO_CATEGORIA",
+			joinColumns=@JoinColumn(name="produto_id"),
+			inverseJoinColumns=@JoinColumn(name="categoria_id"))
+	private List<Categoria> categorias = new ArrayList<>();
 	
-	//Contrutor da classe (instancia o objeto sem jogar nada para os atributos
-	public Categoria() {
-		
+	//Construtores
+	//1 - Construtores (tem que ter o vazio
+	public Produto() {
 	}
 
-	//para ja atribuir valores as variavei da classe de acordo com o construtor
-	public Categoria(Integer id, String nome) {
+	//2 - Nao entra nesse construtor pois já foi iniciada acima (pois tem new que chama a classe dela)
+	public Produto(Integer id, String nome, Double preco) {
 		super();
 		this.id = id;
 		this.nome = nome;
+		this.preco = preco;
 	}
 
-	//Getters and Setter > como default nao deica variaveis da classe disponiveis (id,nome)
-	//Mas aqui a gente cria variaveis de acesso a esses tributos
+	//Getters e Setters (pra todo mundo sempre > tem que adicionar se tiver um novo relacionamento)
 	public Integer getId() {
 		return id;
 	}
@@ -55,18 +59,24 @@ public class Categoria implements Serializable {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	
-	//para produtos
-	public List<Produto> getProdutos() {
-		return produtos;
+
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
-		this.produtos = produtos;
+	public void setPreco(Double preco) {
+		this.preco = preco;
 	}
 
-	//Generate Hashcode e Equals - comparação dos objetos por valor e nao por ponteiro de memória
-	//só id pois é o que usa pra identificar os objetos da classe
+	public List<Categoria> getCategorias() {
+		return categorias;
+	}
+
+	public void setCategorias(List<Categoria> categorias) {
+		this.categorias = categorias;
+	}
+
+	//Gerando HashCode e Equals
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,7 +93,7 @@ public class Categoria implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -91,7 +101,8 @@ public class Categoria implements Serializable {
 			return false;
 		return true;
 	}
-
+	
+	
 	
 	
 	
