@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Produto implements Serializable{
 	private static final long serialVersionUID = 1L;
@@ -23,6 +25,7 @@ public class Produto implements Serializable{
 	private Double preco;
 	
 	//Relacionamentos de tabelas > definição tabela de-para e chaves extrangeiras
+	@JsonBackReference // do outro lado já foi a lista de objetos > ai evita de buscar > omite a lista de cat pra cada produto
 	@ManyToMany
 	@JoinTable(
 			name="PRODUTO_CATEGORIA",
