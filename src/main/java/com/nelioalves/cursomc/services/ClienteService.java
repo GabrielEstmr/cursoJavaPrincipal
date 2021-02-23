@@ -11,18 +11,13 @@ import com.nelioalves.cursomc.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class ClienteService {
-	
-	// dependencia automaticamente instanciada pelo Spring
+
 	@Autowired
 	private ClienteRepository repo;
-	
 
 	public Cliente buscar(Integer id) {
 		Optional<Cliente> obj = repo.findById(id);
-		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
 	}
-
-	 
 }
