@@ -27,7 +27,6 @@ public class Cliente implements Serializable{
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
-//	private TipoCliente tipo;
 	private Integer tipo;
 	
 	//Assossiação bidirecional > @JsonManagedReference puxa enderecos (ai em enderecos usa back reference pra nao puxar e nao dar ciclico)
@@ -39,6 +38,9 @@ public class Cliente implements Serializable{
 	@ElementCollection
 	@CollectionTable(name="TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+	
+	@OneToMany(mappedBy="cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 	
 	//Construtores
 	//	Vazio
@@ -113,6 +115,14 @@ public class Cliente implements Serializable{
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+	
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	//HashCode e Equals
 	@Override
@@ -139,6 +149,8 @@ public class Cliente implements Serializable{
 			return false;
 		return true;
 	}
+
+	
 	
 	
 	
