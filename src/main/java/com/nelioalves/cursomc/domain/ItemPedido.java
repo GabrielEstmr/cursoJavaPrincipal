@@ -5,10 +5,14 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 
+	//IGNORE: nao tem acesso nem a pedido nem a produto
+	@JsonIgnore
 	@EmbeddedId
 	private ItemPedidoPK id = new ItemPedidoPK();
 	
@@ -35,10 +39,12 @@ public class ItemPedido implements Serializable{
 	
 	
 	//Manual > para ter acesso diretamente e Pedido e Produto fora da classe
+	@JsonIgnore
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
 	
+//	@JsonIgnore > nao tem pois queremos que apareca o produto no JSON
 	public Produto getProduto() {
 		return id.getProduto();
 	}
