@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 //Serializable - para objetos da classe possa ser convertido em sequencia de bites > para trafegar em rede, ser salvos etc
 @Entity
@@ -25,8 +25,7 @@ public class Categoria implements Serializable {
 	
 	//Relacionamentos de tabelas
 	//Como já fez em Produtos > aqui é só referenciar
-	@JsonManagedReference //>> evitar referencia ciclica (LADO QUE VC QUER QUE VENHA OBJETOS ASSOSSIADOS)
-	//Assossiação ciclica: QUANDO TEM RELAÇÃO BIDIRECIONAL
+	//@JsonManagedReference //>> evitar referencia ciclica (LADO QUE VC QUER QUE VENHA OBJETOS ASSOSSIADOS)//Assossiação ciclica: QUANDO TEM RELAÇÃO BIDIRECIONAL
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
