@@ -30,8 +30,8 @@ public class CategoriaResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	//@PathVariable > liga id do endpoint ao id do metodo find no código
 	//ResponseEntity > tipo do Spring que ja da como response varios parametros para a resposta do metodo
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		Categoria obj = service.buscar(id);
+	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
+		Categoria obj = service.find(id);
 		//Retorno em caso de sucesso
 		return ResponseEntity.ok().body(obj);
 	}
@@ -46,6 +46,17 @@ public class CategoriaResource {
 		
 		return ResponseEntity.created(uri).build();
 	}
+	
+	
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria obj, @PathVariable Integer id){
+		obj.setId(id);
+		obj = service.update(obj);
+		return ResponseEntity.noContent().build();
+	}
+	
+	
+	
 }
 
 
