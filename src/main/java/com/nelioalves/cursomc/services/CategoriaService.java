@@ -23,6 +23,11 @@ public class CategoriaService {
 	@Autowired
 	private CategoriaRepository repo;
 	
+	private void updateData(Categoria newObj,Categoria obj) {
+		//Aqui atualização de newObj (pois CPF e tipo estavam vindos nulos)
+		newObj.setNome(obj.getNome());
+	}
+	
 
 	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
@@ -36,10 +41,11 @@ public class CategoriaService {
 		obj.setId(null);
 		return repo.save(obj);
 	}
-
+	
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj,obj);
+		return repo.save(newObj);
 	}
 	
 	public void delete(Integer id) {
